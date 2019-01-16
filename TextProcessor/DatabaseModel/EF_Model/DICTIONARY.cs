@@ -9,12 +9,10 @@
 
 namespace TextProcessor.DatabaseModel.EF_Model
 {
-    using System;
-    using System.Collections.Generic;
     
     public partial class DICTIONARY
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string WORD { get; set; }
         public decimal FREQUENCY { get; set; }
     }

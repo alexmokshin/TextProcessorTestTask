@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseModel\DatabaseClass.cs" />
     <Compile Include="DatabaseModel\EF_Model\DICTIONARY.cs">
       <DependentUpon>TextDictionaryDatabaseModel.tt</DependentUpon>
     </Compile>
