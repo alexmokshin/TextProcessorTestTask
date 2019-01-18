@@ -4,23 +4,50 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище TextDictionaryDatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище TextDictionaryDatabaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DICTIONARY">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WORD" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="FREQUENCY" Type="numeric" Precision="4" Scale="4" Nullable="false" />
+          <Property Name="WORD2FREQUENCY_ID" Type="bigint" Nullable="false" />
         </EntityType>
-        <Function Name="GET_WORD_FREQUENCY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="substr_word" Type="nvarchar" Mode="In" />
+        <EntityType Name="WORD2FREQUENCY">
+          <Key>
+            <PropertyRef Name="WORD2FREQUENCY_ID" />
+          </Key>
+          <Property Name="WORD2FREQUENCY_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FREQUENCY" Type="numeric" Precision="38" Scale="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_WORD2FREQUENCY_ID">
+          <End Role="WORD2FREQUENCY" Type="Self.WORD2FREQUENCY" Multiplicity="1" />
+          <End Role="DICTIONARY" Type="Self.DICTIONARY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WORD2FREQUENCY">
+              <PropertyRef Name="WORD2FREQUENCY_ID" />
+            </Principal>
+            <Dependent Role="DICTIONARY">
+              <PropertyRef Name="WORD2FREQUENCY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="INS_WORD_FREQUENCY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="word" Type="nvarchar" Mode="In" />
+          <Parameter Name="frequency" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="SEL_WORD_TOP_FREQUENCY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="word" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище TextDictionaryDatabaseModelContainer">
           <EntitySet Name="DICTIONARY" EntityType="Self.DICTIONARY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WORD2FREQUENCY" EntityType="Self.WORD2FREQUENCY" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_WORD2FREQUENCY_ID" Association="Self.FK_WORD2FREQUENCY_ID">
+            <End Role="WORD2FREQUENCY" EntitySet="WORD2FREQUENCY" />
+            <End Role="DICTIONARY" EntitySet="DICTIONARY" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TextDictionaryDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -30,14 +57,47 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WORD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FREQUENCY" Type="Decimal" Precision="4" Scale="4" Nullable="false" />
+          <Property Name="WORD2FREQUENCY_ID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="WORD2FREQUENCY" Relationship="TextDictionaryDatabaseModel.FK_WORD2FREQUENCY_ID" FromRole="DICTIONARY" ToRole="WORD2FREQUENCY" />
         </EntityType>
         <EntityContainer Name="TextDictionaryDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="DICTIONARY" EntityType="Self.DICTIONARY" />
           <FunctionImport Name="GET_WORD_FREQUENCY" ReturnType="Collection(String)">
             <Parameter Name="substr_word" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="WORD2FREQUENCY" EntityType="TextDictionaryDatabaseModel.WORD2FREQUENCY" />
+          <AssociationSet Name="FK_WORD2FREQUENCY_ID" Association="TextDictionaryDatabaseModel.FK_WORD2FREQUENCY_ID">
+            <End Role="WORD2FREQUENCY" EntitySet="WORD2FREQUENCY" />
+            <End Role="DICTIONARY" EntitySet="DICTIONARY" />
+          </AssociationSet>
+          <FunctionImport Name="INS_WORD_FREQUENCY">
+            <Parameter Name="word" Mode="In" Type="String" />
+            <Parameter Name="frequency" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SEL_WORD_TOP_FREQUENCY" ReturnType="Collection(String)">
+          <Parameter Name="word" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <EntityType Name="WORD2FREQUENCY">
+          <Key>
+            <PropertyRef Name="WORD2FREQUENCY_ID" />
+          </Key>
+          <Property Name="WORD2FREQUENCY_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FREQUENCY" Type="Decimal" Nullable="false" Precision="38" Scale="20" />
+          <NavigationProperty Name="DICTIONARY" Relationship="TextDictionaryDatabaseModel.FK_WORD2FREQUENCY_ID" FromRole="WORD2FREQUENCY" ToRole="DICTIONARY" />
+        </EntityType>
+        <Association Name="FK_WORD2FREQUENCY_ID">
+          <End Type="TextDictionaryDatabaseModel.WORD2FREQUENCY" Role="WORD2FREQUENCY" Multiplicity="1" />
+          <End Type="TextDictionaryDatabaseModel.DICTIONARY" Role="DICTIONARY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WORD2FREQUENCY">
+              <PropertyRef Name="WORD2FREQUENCY_ID" />
+            </Principal>
+            <Dependent Role="DICTIONARY">
+              <PropertyRef Name="WORD2FREQUENCY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -47,13 +107,22 @@
           <EntitySetMapping Name="DICTIONARY">
             <EntityTypeMapping TypeName="TextDictionaryDatabaseModel.DICTIONARY">
               <MappingFragment StoreEntitySet="DICTIONARY">
+                <ScalarProperty Name="WORD2FREQUENCY_ID" ColumnName="WORD2FREQUENCY_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="WORD" ColumnName="WORD" />
-                <ScalarProperty Name="FREQUENCY" ColumnName="FREQUENCY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GET_WORD_FREQUENCY" FunctionName="Хранилище TextDictionaryDatabaseModel.GET_WORD_FREQUENCY" />
+          <EntitySetMapping Name="WORD2FREQUENCY">
+            <EntityTypeMapping TypeName="TextDictionaryDatabaseModel.WORD2FREQUENCY">
+              <MappingFragment StoreEntitySet="WORD2FREQUENCY">
+                <ScalarProperty Name="FREQUENCY" ColumnName="FREQUENCY" />
+                <ScalarProperty Name="WORD2FREQUENCY_ID" ColumnName="WORD2FREQUENCY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="INS_WORD_FREQUENCY" FunctionName="Хранилище TextDictionaryDatabaseModel.INS_WORD_FREQUENCY" />
+          <FunctionImportMapping FunctionImportName="SEL_WORD_TOP_FREQUENCY" FunctionName="Хранилище TextDictionaryDatabaseModel.SEL_WORD_TOP_FREQUENCY" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

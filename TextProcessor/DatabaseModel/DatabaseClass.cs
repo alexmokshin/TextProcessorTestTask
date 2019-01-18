@@ -7,28 +7,27 @@ using TextProcessor.DatabaseModel.EF_Model;
 
 namespace TextProcessor.DatabaseModel
 {
-    public class DatabaseClass
+    public class DatabaseAccess
     {
+        static TextDictionaryDatabaseEntities _textDictionary;
         private List<DICTIONARY> DICTIONARies { get; set; }
-        public void FillDatabaseDictionary()
+        public DatabaseAccess()
         {
-            TextDictionaryDatabaseEntities textDictionary = new TextDictionaryDatabaseEntities();
-            textDictionary.DICTIONARY.AddRange(DICTIONARies);
-            textDictionary.SaveChanges();
+            _textDictionary = new TextDictionaryDatabaseEntities();
         }
-        public void SetDictionaryList(Dictionary<string, decimal> valuePairs)
+        public void FillDatabaseDictionary(Dictionary<string, decimal> valuePairs)
         {
-            DICTIONARies = new List<DICTIONARY>();
-            
             foreach (var item in valuePairs)
             {
+                _textDictionary.INS_WORD_FREQUENCY(item.Key, item.Value);
                 
-                DICTIONARies.Add(new DICTIONARY
-                {
-                    WORD = item.Key,
-                    FREQUENCY = item.Value
-                });
             }
+            _textDictionary.SaveChanges();
+        }
+        public string[] getTopWordsFromDictionary(string input_word)
+        {
+            var returnString = _textDictionary.GET_WORD_FREQUENCY(input_word);
+            return null;
         }
     }
 }

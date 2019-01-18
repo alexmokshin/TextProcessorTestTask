@@ -17,7 +17,7 @@ namespace TextProcessorUnitTests
         [TestMethod]
         public void TestMethod1()
         {
-            DatabaseClass database = new DatabaseClass();
+            DatabaseAccess database = new DatabaseAccess();
             StreamReader reader = new StreamReader("chehov.txt");
             string sLine = reader.ReadToEnd();
             Char[] SEPARATORS = new Char[] { ' ', ',', '.', '!', '?', '-', '\n', '"', '(', ')', '[',']','*','\'',':'};
@@ -25,16 +25,14 @@ namespace TextProcessorUnitTests
             string[] slineMass = sLine.Split(SEPARATORS);
             var dict = FillDictionary(slineMass);
            // var moqSet = new Mock<DbSet<>>
-            DatabaseClass dc = new DatabaseClass();
-            dc.SetDictionaryList(dict);
-            dc.FillDatabaseDictionary();
+            
             
         }
-        [TestMethod]
+        /*[TestMethod]
         public string[] input_text_array(string text_file_path)
         {
 
-        }
+        }*/
         public Dictionary<string,decimal> FillDictionary(string[] massString)
         {
             decimal frequency = 0M;

@@ -28,6 +28,7 @@ namespace TextProcessor.DatabaseModel.EF_Model
         }
     
         public virtual DbSet<DICTIONARY> DICTIONARY { get; set; }
+        public virtual DbSet<WORD2FREQUENCY> WORD2FREQUENCY { get; set; }
     
         public virtual ObjectResult<string> GET_WORD_FREQUENCY(string substr_word)
         {
@@ -36,6 +37,28 @@ namespace TextProcessor.DatabaseModel.EF_Model
                 new ObjectParameter("substr_word", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GET_WORD_FREQUENCY", substr_wordParameter);
+        }
+    
+        public virtual int INS_WORD_FREQUENCY(string word, Nullable<decimal> frequency)
+        {
+            var wordParameter = word != null ?
+                new ObjectParameter("word", word) :
+                new ObjectParameter("word", typeof(string));
+    
+            var frequencyParameter = frequency.HasValue ?
+                new ObjectParameter("frequency", frequency) :
+                new ObjectParameter("frequency", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("INS_WORD_FREQUENCY", wordParameter, frequencyParameter);
+        }
+    
+        public virtual ObjectResult<string> SEL_WORD_TOP_FREQUENCY(string word)
+        {
+            var wordParameter = word != null ?
+                new ObjectParameter("word", word) :
+                new ObjectParameter("word", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SEL_WORD_TOP_FREQUENCY", wordParameter);
         }
     }
 }

@@ -85,6 +85,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TextDictionaryDatabaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseModel\EF_Model\TextDictionaryDatabaseModel.Views.cs" />
+    <Compile Include="DatabaseModel\EF_Model\WORD2FREQUENCY.cs">
+      <DependentUpon>TextDictionaryDatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

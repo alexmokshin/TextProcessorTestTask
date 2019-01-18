@@ -12,12 +12,18 @@ namespace TextProcessor.DatabaseModel.EF_Model
     using System;
     using System.Collections.Generic;
     
-    public partial class DICTIONARY
+    public partial class WORD2FREQUENCY
     {
-        public int ID { get; set; }
-        public string WORD { get; set; }
-        public long WORD2FREQUENCY_ID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WORD2FREQUENCY()
+        {
+            this.DICTIONARY = new HashSet<DICTIONARY>();
+        }
     
-        public virtual WORD2FREQUENCY WORD2FREQUENCY { get; set; }
+        public long WORD2FREQUENCY_ID { get; set; }
+        public decimal FREQUENCY { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DICTIONARY> DICTIONARY { get; set; }
     }
 }
