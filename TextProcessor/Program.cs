@@ -12,20 +12,31 @@ namespace TextProcessor
     {
         static void Main(string[] args)
         {
+            string word_to_complete = "1test";
             DatabaseAccess dac = new DatabaseAccess();
-            StreamReader reader = new StreamReader("chehov.txt");
+            StreamReader reader = new StreamReader("voina_i_mir.txt");
             string sLine = reader.ReadToEnd();
             Char[] SEPARATORS = new Char[] { ' ', ',', '.', '!', '?', '-', '\n', '"', '(', ')', '[', ']', '*', '\'', ':' };
 
             string[] slineMass = sLine.Split(SEPARATORS);
             var dict = FillDictionary(slineMass);
             dac.FillDatabaseDictionary(dict);
-            dac.getTopWordsFromDictionary("ноч");
-            Console.ReadKey();
+            while (String.IsNullOrWhiteSpace(word_to_complete))
+            {
+                Console.WriteLine("Начните вводить текст:");
+                word_to_complete = Console.ReadLine();
+                string[] test = dac.getTopWordsFromDictionary(word_to_complete);
+                foreach(var t in test)
+                {
+                    Console.WriteLine(t);
+                }
+            }
+            
         }
         public static Dictionary<string, decimal> FillDictionary(string[] massString)
         {
             decimal frequency = 0M;
+            Console.WriteLine("Парсинг текста");
             var dictionary = new Dictionary<string, decimal>();
             if (massString.Length > 0 && massString != null)
             {

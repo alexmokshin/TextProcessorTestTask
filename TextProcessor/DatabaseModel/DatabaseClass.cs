@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace TextProcessor.DatabaseModel
 
         public void FillDatabaseDictionary(Dictionary<string, decimal> valuePairs)
         {
+            Console.WriteLine("Наполнение словаря");
             foreach (var item in valuePairs)
             {
                 _textDictionary.INS_WORD_FREQUENCY(item.Key, item.Value);
@@ -31,8 +33,8 @@ namespace TextProcessor.DatabaseModel
 
         public string[] getTopWordsFromDictionary(string input_word)
         {
-            var returnString = _textDictionary.SEL_WORD_TOP_FREQUENCY(input_word);
-            return null;
+            var p0 = new SqlParameter("word", System.Data.SqlDbType.NVarChar, 15).Value = input_word;
+            return _textDictionary.Database.SqlQuery<string>("exec dbo.SEL_WORD_TOP_FREQUENCY {0}",p0).ToArray();
         }
     }
 }
