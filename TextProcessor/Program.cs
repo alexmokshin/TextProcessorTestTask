@@ -21,7 +21,7 @@ namespace TextProcessor
             string[] slineMass = sLine.Split(SEPARATORS);
             var dict = FillDictionary(slineMass);
             dac.FillDatabaseDictionary(dict);
-            while (String.IsNullOrWhiteSpace(word_to_complete))
+            while (!String.IsNullOrEmpty(word_to_complete))
             {
                 Console.WriteLine("Начните вводить текст:");
                 word_to_complete = Console.ReadLine();
