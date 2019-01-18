@@ -114,11 +114,8 @@
       <DependentUpon>TextDictionaryDatabaseModel.edmx</DependentUpon>
       <LastGenOutput>TextDictionaryDatabaseModel.cs</LastGenOutput>
     </Content>
-    <Content Include="TextDictionaryDatabase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="TextDictionaryDatabase.mdf" />
     <Content Include="TextDictionaryDatabase_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>TextDictionaryDatabase.mdf</DependentUpon>
     </Content>
   </ItemGroup>

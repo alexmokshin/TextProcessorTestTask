@@ -62,9 +62,6 @@
         </EntityType>
         <EntityContainer Name="TextDictionaryDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="DICTIONARY" EntityType="Self.DICTIONARY" />
-          <FunctionImport Name="GET_WORD_FREQUENCY" ReturnType="Collection(String)">
-            <Parameter Name="substr_word" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="WORD2FREQUENCY" EntityType="TextDictionaryDatabaseModel.WORD2FREQUENCY" />
           <AssociationSet Name="FK_WORD2FREQUENCY_ID" Association="TextDictionaryDatabaseModel.FK_WORD2FREQUENCY_ID">
             <End Role="WORD2FREQUENCY" EntitySet="WORD2FREQUENCY" />

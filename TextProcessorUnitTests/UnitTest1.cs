@@ -1,13 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextProcessor;
 using TextProcessor.DatabaseModel;
 using System.IO;
-using System.Collections;
-using Moq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
 
 namespace TextProcessorUnitTests
 {
@@ -24,15 +20,10 @@ namespace TextProcessorUnitTests
             
             string[] slineMass = sLine.Split(SEPARATORS);
             var dict = FillDictionary(slineMass);
-           // var moqSet = new Mock<DbSet<>>
             
             
         }
-        /*[TestMethod]
-        public string[] input_text_array(string text_file_path)
-        {
 
-        }*/
         public Dictionary<string,decimal> FillDictionary(string[] massString)
         {
             decimal frequency = 0M;

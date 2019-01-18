@@ -14,7 +14,10 @@ namespace TextProcessor.DatabaseModel
         public DatabaseAccess()
         {
             _textDictionary = new TextDictionaryDatabaseEntities();
+            
         }
+
+
         public void FillDatabaseDictionary(Dictionary<string, decimal> valuePairs)
         {
             foreach (var item in valuePairs)
@@ -24,9 +27,11 @@ namespace TextProcessor.DatabaseModel
             }
             _textDictionary.SaveChanges();
         }
+
+
         public string[] getTopWordsFromDictionary(string input_word)
         {
-            var returnString = _textDictionary.GET_WORD_FREQUENCY(input_word);
+            var returnString = _textDictionary.SEL_WORD_TOP_FREQUENCY(input_word);
             return null;
         }
     }

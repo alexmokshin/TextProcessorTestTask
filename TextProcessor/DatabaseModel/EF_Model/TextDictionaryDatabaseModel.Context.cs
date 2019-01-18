@@ -30,15 +30,6 @@ namespace TextProcessor.DatabaseModel.EF_Model
         public virtual DbSet<DICTIONARY> DICTIONARY { get; set; }
         public virtual DbSet<WORD2FREQUENCY> WORD2FREQUENCY { get; set; }
     
-        public virtual ObjectResult<string> GET_WORD_FREQUENCY(string substr_word)
-        {
-            var substr_wordParameter = substr_word != null ?
-                new ObjectParameter("substr_word", substr_word) :
-                new ObjectParameter("substr_word", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GET_WORD_FREQUENCY", substr_wordParameter);
-        }
-    
         public virtual int INS_WORD_FREQUENCY(string word, Nullable<decimal> frequency)
         {
             var wordParameter = word != null ?
