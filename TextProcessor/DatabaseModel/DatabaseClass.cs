@@ -10,6 +10,7 @@ namespace TextProcessor.DatabaseModel
 {
     public class DatabaseAccess
     {
+        private bool IsBusy { get; set; } = false;
         static TextDictionaryDatabaseEntities _textDictionary;
         private List<DICTIONARY> DICTIONARies { get; set; }
         public DatabaseAccess()
@@ -21,20 +22,41 @@ namespace TextProcessor.DatabaseModel
 
         public void FillDatabaseDictionary(Dictionary<string, decimal> valuePairs)
         {
-            Console.WriteLine("Наполнение словаря");
-            foreach (var item in valuePairs)
+            if (!IsBusy)
             {
-                _textDictionary.INS_WORD_FREQUENCY(item.Key, item.Value);
-                
+                Console.WriteLine("Наполнение словаря");
+                IsBusy = true;
+                foreach (var item in valuePairs)
+                {
+                    _textDictionary.INS_WORD_FREQUENCY(item.Key, item.Value);
+
+                }
+                _textDictionary.SaveChanges();
+                Console.WriteLine("Словарь заполнен");
+                IsBusy = false;
             }
-            _textDictionary.SaveChanges();
+            else
+                Console.WriteLine("Словарь наполняется. Повторите операцию позже");
         }
 
 
         public string[] getTopWordsFromDictionary(string input_word)
         {
             var p0 = new SqlParameter("word", System.Data.SqlDbType.NVarChar, 15).Value = input_word;
-            return _textDictionary.Database.SqlQuery<string>("exec dbo.SEL_WORD_TOP_FREQUENCY {0}",p0).ToArray();
+            return _textDictionary.Database.SqlQuery<string>("exec dbo.SEL_WORD_TOP_FREQUENCY {0}", p0).ToArray();
+        }
+
+        public void DeleteDictionaryFromDatabase()
+        {
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                _textDictionary.DeleteDictionaryFromDatabase();
+                Console.WriteLine("Словарь удален");
+                IsBusy = false;
+            }
+            else
+                Console.WriteLine("База занята. Пожалуйста, повторите операцию позже");
         }
     }
 }

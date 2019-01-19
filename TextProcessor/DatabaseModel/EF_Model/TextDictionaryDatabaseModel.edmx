@@ -32,6 +32,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteDictionaryFromDatabase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="INS_WORD_FREQUENCY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="word" Type="nvarchar" Mode="In" />
           <Parameter Name="frequency" Type="numeric" Mode="In" />
@@ -74,6 +75,7 @@
           <FunctionImport Name="SEL_WORD_TOP_FREQUENCY" ReturnType="Collection(String)">
           <Parameter Name="word" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="DeleteDictionaryFromDatabase" />
         </EntityContainer>
         <EntityType Name="WORD2FREQUENCY">
           <Key>
@@ -120,6 +122,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="INS_WORD_FREQUENCY" FunctionName="Хранилище TextDictionaryDatabaseModel.INS_WORD_FREQUENCY" />
           <FunctionImportMapping FunctionImportName="SEL_WORD_TOP_FREQUENCY" FunctionName="Хранилище TextDictionaryDatabaseModel.SEL_WORD_TOP_FREQUENCY" />
+          <FunctionImportMapping FunctionImportName="DeleteDictionaryFromDatabase" FunctionName="Хранилище TextDictionaryDatabaseModel.DeleteDictionaryFromDatabase" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

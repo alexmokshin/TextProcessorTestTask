@@ -51,5 +51,10 @@ namespace TextProcessor.DatabaseModel.EF_Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SEL_WORD_TOP_FREQUENCY", wordParameter);
         }
+    
+        public virtual int DeleteDictionaryFromDatabase()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteDictionaryFromDatabase");
+        }
     }
 }
