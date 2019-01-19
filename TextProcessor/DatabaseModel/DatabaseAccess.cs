@@ -8,7 +8,7 @@ using TextProcessor.DatabaseModel.EF_Model;
 
 namespace TextProcessor.DatabaseModel
 {
-    public class DatabaseAccess
+    public class DatabaseAccess : IDatabaseManage<string[], Dictionary<string,decimal>>
     {
         private bool IsBusy { get; set; } = false;
         static TextDictionaryDatabaseEntities _textDictionary;
@@ -20,13 +20,13 @@ namespace TextProcessor.DatabaseModel
         }
 
 
-        public void FillDatabaseDictionary(Dictionary<string, decimal> valuePairs)
+        public void FillDatabaseDictionary(Dictionary<string, decimal> word_dictionary)
         {
             if (!IsBusy)
             {
                 Console.WriteLine("Наполнение словаря");
                 IsBusy = true;
-                foreach (var item in valuePairs)
+                foreach (var item in word_dictionary)
                 {
                     _textDictionary.INS_WORD_FREQUENCY(item.Key, item.Value);
 
@@ -40,7 +40,7 @@ namespace TextProcessor.DatabaseModel
         }
 
 
-        public string[] getTopWordsFromDictionary(string input_word)
+        public string[] GetTopWordsFromDictionary(string input_word)
         {
             var p0 = new SqlParameter("word", System.Data.SqlDbType.NVarChar, 15).Value = input_word;
             return _textDictionary.Database.SqlQuery<string>("exec dbo.SEL_WORD_TOP_FREQUENCY {0}", p0).ToArray();

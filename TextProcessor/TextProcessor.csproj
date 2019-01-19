@@ -66,7 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseModel\DatabaseClass.cs" />
+    <Compile Include="BusinessLayer\CommandLineController.cs" />
+    <Compile Include="BusinessLayer\TextProcessorCommand.cs" />
+    <Compile Include="DatabaseModel\DatabaseAccess.cs" />
     <Compile Include="DatabaseModel\EF_Model\DICTIONARY.cs">
       <DependentUpon>TextDictionaryDatabaseModel.tt</DependentUpon>
     </Compile>
@@ -89,6 +91,7 @@
     <Compile Include="DatabaseModel\EF_Model\WORD2FREQUENCY.cs">
       <DependentUpon>TextDictionaryDatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseModel\IDatabaseManage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

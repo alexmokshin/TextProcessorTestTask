@@ -25,7 +25,7 @@ namespace TextProcessor
             {
                 Console.WriteLine("Начните вводить текст:");
                 word_to_complete = Console.ReadLine();
-                string[] test = dac.getTopWordsFromDictionary(word_to_complete);
+                string[] test = dac.GetTopWordsFromDictionary(word_to_complete);
                 foreach(var t in test)
                 {
                     Console.WriteLine(t);
