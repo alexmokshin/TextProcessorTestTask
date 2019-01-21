@@ -44,6 +44,7 @@ namespace TextProcessor.DatabaseModel
         {
             var p0 = new SqlParameter("word", System.Data.SqlDbType.NVarChar, 15).Value = input_word;
             return _textDictionary.Database.SqlQuery<string>("exec dbo.SEL_WORD_TOP_FREQUENCY {0}", p0).ToArray();
+            
         }
 
         public void DeleteDictionaryFromDatabase()

@@ -26,7 +26,14 @@ namespace TextProcessor
                 do
                 {
                     input_word = Console.ReadLine();
-                    commandLine.GetTopWords(input_word);
+                    var t = commandLine.GetTopWords(input_word);
+                    if (t.Length != 0)
+                    {
+                        foreach (var item in t)
+                            Console.WriteLine(item);
+                    }
+                    else
+                        Console.WriteLine("На такой набор, слов в словаре не найдено");
                 }
                 while (!String.IsNullOrEmpty(input_word));
             }

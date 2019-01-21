@@ -39,7 +39,7 @@ namespace TextProcessor.BusinessLayer
             return dictionary;
         }
 
-        public string[] GetStringArrayFromTextFile (string text_file_path)
+        private string[] GetStringArrayFromTextFile (string text_file_path)
         {
             string file_text_string = null;
             if (File.Exists(@text_file_path))
@@ -53,7 +53,7 @@ namespace TextProcessor.BusinessLayer
             else
             {
                 Console.WriteLine("Файл по данному пути не найден. Пожалуйста, проверьте путь");
-                return null;
+                return Array.Empty<string>();
             }
 
         }
@@ -61,8 +61,11 @@ namespace TextProcessor.BusinessLayer
         public void AddWordFrequencyDictionaryIntoDatabase(string text_file_path)
         {
             var stringMass = GetStringArrayFromTextFile(text_file_path);
-            var dictionary_to_fill = FillDictionaryFromTextFile(stringMass);
-            dbaccess.FillDatabaseDictionary(dictionary_to_fill);
+            if (stringMass != null && stringMass.Length > 0)
+            {
+                var dictionary_to_fill = FillDictionaryFromTextFile(stringMass);
+                dbaccess.FillDatabaseDictionary(dictionary_to_fill);
+            }
         }
 
         public void DeleteDictionaryFromDatabase()
