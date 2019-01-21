@@ -17,12 +17,13 @@ namespace TextProcessor
             if (args.Length > 0)
             {
                 commandLine.SwitchCommand();
+                Console.WriteLine("Нажмите кнопку для выхода из программы");
                 Console.ReadLine();
             }
             else
             {
                 string input_word = "";
-                Console.WriteLine("Введите слово для автодополнения");
+                Console.WriteLine("Введите слово для автодополнения. Для выхода - введите пустую строку");
                 do
                 {
                     input_word = Console.ReadLine();
@@ -33,9 +34,10 @@ namespace TextProcessor
                             Console.WriteLine(item);
                     }
                     else
-                        Console.WriteLine("На такой набор, слов в словаре не найдено");
+                        Console.WriteLine("Слов в словаре не найдено");
                 }
-                while (!String.IsNullOrEmpty(input_word));
+                while (!String.IsNullOrEmpty(input_word))
+                ;
             }
 
             
