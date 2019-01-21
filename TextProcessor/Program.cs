@@ -16,25 +16,39 @@ namespace TextProcessor
 
             if (args.Length > 0)
             {
-                commandLine.SwitchCommand();
-                Console.WriteLine("Нажмите кнопку для выхода из программы");
-                Console.ReadLine();
+                try
+                {
+                    commandLine.SwitchCommand();
+                    Console.WriteLine("Нажмите кнопку для выхода из программы");
+                    Console.ReadLine();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             else
             {
                 string input_word = "";
                 Console.WriteLine("Введите слово для автодополнения. Для выхода - введите пустую строку");
                 do
-                {                    
-                    input_word = Console.ReadLine();
-                    var t = commandLine.GetTopWords(input_word);
-                    if (t.Length != 0)
+                {
+                    try
                     {
-                        foreach (var item in t)
-                            Console.WriteLine(item);
+                        input_word = Console.ReadLine();
+                        var t = commandLine.GetTopWords(input_word);
+                        if (t.Length != 0)
+                        {
+                            foreach (var item in t)
+                                Console.WriteLine(item);
+                        }
+                        else
+                            Console.WriteLine("Слов в словаре не найдено");
                     }
-                    else
-                        Console.WriteLine("Слов в словаре не найдено");
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
                 while (!String.IsNullOrEmpty(input_word))
                 ;
