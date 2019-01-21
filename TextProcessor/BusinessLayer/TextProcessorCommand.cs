@@ -67,8 +67,9 @@ namespace TextProcessor.BusinessLayer
 
         public void DeleteDictionaryFromDatabase()
         {
-            dbaccess.DeleteDictionaryFromDatabase();
             Console.WriteLine("Выполняю удаление словаря");
+            dbaccess.DeleteDictionaryFromDatabase();
+            
         }
 
         public string[] GetTopFrequencyWords(string input_word)
