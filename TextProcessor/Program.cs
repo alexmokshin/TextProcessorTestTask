@@ -25,7 +25,7 @@ namespace TextProcessor
                 string input_word = "";
                 Console.WriteLine("Введите слово для автодополнения. Для выхода - введите пустую строку");
                 do
-                {
+                {                    
                     input_word = Console.ReadLine();
                     var t = commandLine.GetTopWords(input_word);
                     if (t.Length != 0)
