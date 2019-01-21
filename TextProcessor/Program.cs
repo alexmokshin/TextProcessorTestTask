@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TextProcessor.DatabaseModel;
+using TextProcessor.BusinessLayer;
 
 namespace TextProcessor
 {
@@ -12,7 +11,7 @@ namespace TextProcessor
     {
         static void Main(string[] args)
         {
-            string word_to_complete = "1test";
+            /*string word_to_complete = "1test";
             DatabaseAccess dac = new DatabaseAccess();
             StreamReader reader = new StreamReader("voina_i_mir.txt");
             string sLine = reader.ReadToEnd();
@@ -29,29 +28,27 @@ namespace TextProcessor
                 foreach(var t in test)
                 {
                     Console.WriteLine(t);
-                }
-            }
-            
-        }
-        public static Dictionary<string, decimal> FillDictionary(string[] massString)
-        {
-            decimal frequency = 0M;
-            Console.WriteLine("Парсинг текста");
-            var dictionary = new Dictionary<string, decimal>();
-            if (massString.Length > 0 && massString != null)
-            {
-                foreach (var item in massString)
-                {
-                    if (item.Length > 3 && item.Length <= 15)
-                    {
-                        frequency = massString.Count(t => t == item) / Convert.ToDecimal(massString.Length);
-                        if (!dictionary.ContainsKey(item))
-                            dictionary.Add(item, Math.Round(frequency,18));
-                    }
-                }
-            }
-            return dictionary;
+                }*/
+            CommandLineController commandLine = new CommandLineController(args);
 
+            if (args.Length > 0)
+            {
+                commandLine.SwitchCommand();
+                Console.ReadLine();
+            }
+            else
+            {
+                string input_word = "";
+                do
+                {
+                    input_word = Console.ReadLine();
+                    commandLine.GetTopWords(input_word);
+                }
+                while (!String.IsNullOrEmpty(input_word));
+            }
+
+            
+            
         }
     }
 }
