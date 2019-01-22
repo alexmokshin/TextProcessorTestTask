@@ -43,7 +43,16 @@ namespace TextProcessor.DatabaseModel
         public string[] GetTopWordsFromDictionary(string input_word)
         {
             var p0 = new SqlParameter("word", System.Data.SqlDbType.NVarChar, 15).Value = input_word;
-            return _textDictionary.Database.SqlQuery<string>("exec dbo.SEL_WORD_TOP_FREQUENCY {0}", p0).ToArray();
+            string[] resultArray = null;
+            try
+            {
+                resultArray = _textDictionary.Database.SqlQuery<string>("exec dbo.SEL_WORD_TOP_FREQUENCY {0}", p0).ToArray();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Соединение с базой не установлено\n{0}",ex.StackTrace);
+            }
+            return resultArray;
             
         }
 
