@@ -50,7 +50,7 @@ namespace TextProcessor
                         Console.WriteLine(ex.Message);
                     }
                 }
-                while (!String.IsNullOrEmpty(input_word))
+                while (!String.IsNullOrWhiteSpace(input_word))
                 ;
             }
 
