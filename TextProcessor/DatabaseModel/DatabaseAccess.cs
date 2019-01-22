@@ -12,7 +12,7 @@ namespace TextProcessor.DatabaseModel
     {
         private bool IsBusy { get; set; } = false;
         static TextDictionaryDatabaseEntities _textDictionary;
-        private List<DICTIONARY> DICTIONARies { get; set; }
+       
         public DatabaseAccess()
         {
             _textDictionary = new TextDictionaryDatabaseEntities();
